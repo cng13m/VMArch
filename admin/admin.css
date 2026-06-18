@@ -36,18 +36,15 @@ input:focus, textarea:focus { border-color: var(--ink); background: white; }
 .login-card button span, .primary-button span { font-size: 17px; font-weight: 300; }
 .admin-arrow, .admin-plus {
   display: inline-block;
-  width: 13px;
-  height: 13px;
-  position: relative;
+  width: 16px;
+  height: 16px;
   flex: 0 0 auto;
 }
-.admin-arrow::before {
-  content: ""; position: absolute; width: 11px; height: 1px; right: 1px; top: 6px;
-  background: currentColor; transform: rotate(-45deg); transform-origin: right center;
-}
-.admin-arrow::after {
-  content: ""; position: absolute; width: 6px; height: 6px; right: 0; top: 0;
-  border-top: 1px solid currentColor; border-right: 1px solid currentColor;
+.admin-plus { position: relative; }
+.admin-arrow {
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 19 19 5M9 5h10v10' fill='none' stroke='black' stroke-width='1.9'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 19 19 5M9 5h10v10' fill='none' stroke='black' stroke-width='1.9'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .admin-plus::before, .admin-plus::after {
   content: ""; position: absolute; background: currentColor; left: 1px; top: 6px; width: 12px; height: 1px;
