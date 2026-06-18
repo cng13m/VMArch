@@ -29,7 +29,7 @@ document.querySelectorAll(".reveal").forEach((element) => observer.observe(eleme
 
 window.addEventListener("scroll", () => {
   const media = document.querySelector(".hero-media img");
-  if (window.scrollY < window.innerHeight) {
+  if (media && window.scrollY < window.innerHeight) {
     media.style.transform = `translateY(${window.scrollY * 0.045}px) scale(1.02)`;
   }
 }, { passive: true });
