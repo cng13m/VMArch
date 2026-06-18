@@ -130,7 +130,7 @@ loginForm.addEventListener("submit", async (event) => {
 
   if (error) {
     errorElement.textContent = error.message === "Email not confirmed"
-      ? "Your Supabase email is not confirmed. Confirm it in Authentication → Users, then try again."
+      ? "Your Supabase email is not confirmed. Confirm it in Authentication / Users, then try again."
       : error.message;
     setBusy(button, false);
     return;
@@ -265,7 +265,7 @@ function renderGallery() {
   document.getElementById("gallery-preview").innerHTML = editingGallery.map((image) => `
     <div class="gallery-item">
       <img src="${image.image_url}" alt="">
-      <button type="button" data-delete-image="${image.id}" aria-label="Delete image">×</button>
+      <button type="button" data-delete-image="${image.id}" aria-label="Delete image"><span aria-hidden="true"></span></button>
     </div>`).join("");
   document.querySelectorAll("[data-delete-image]").forEach((button) => button.addEventListener("click", async () => {
     const { error } = await client.from("project_images").delete().eq("id", button.dataset.deleteImage);

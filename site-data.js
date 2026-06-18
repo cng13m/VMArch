@@ -32,7 +32,7 @@
         <a href="${url}" class="project-image">
           <img src="${escapeHTML(image)}" alt="${escapeHTML(project.title)}">
           <span class="project-index">${number}</span>
-          <span class="project-open">View project ↗</span>
+          <span class="project-open">View project <i class="line-icon" aria-hidden="true"></i></span>
         </a>
         <div class="project-meta">
           <h3>${escapeHTML(project.title)}</h3>

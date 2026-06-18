@@ -84,6 +84,6 @@
     `).join("")}</section>` : ""}
     <section class="project-next section-pad">
       <p class="eyebrow">Continue exploring</p>
-      <a href="projects.html">All <em>projects.</em> ↗</a>
+      <a href="projects.html"><span>All <em>projects.</em></span><i class="line-icon line-icon--large" aria-hidden="true"></i></a>
     </section>`;
 })();

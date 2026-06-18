@@ -34,6 +34,29 @@ input:focus, textarea:focus { border-color: var(--ink); background: white; }
 }
 .login-card button { width: 100%; margin-top: 8px; }
 .login-card button span, .primary-button span { font-size: 17px; font-weight: 300; }
+.admin-arrow, .admin-plus {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.admin-arrow::before {
+  content: ""; position: absolute; width: 11px; height: 1px; right: 1px; top: 6px;
+  background: currentColor; transform: rotate(-45deg); transform-origin: right center;
+}
+.admin-arrow::after {
+  content: ""; position: absolute; width: 6px; height: 6px; right: 0; top: 0;
+  border-top: 1px solid currentColor; border-right: 1px solid currentColor;
+}
+.admin-plus::before, .admin-plus::after {
+  content: ""; position: absolute; background: currentColor; left: 1px; top: 6px; width: 12px; height: 1px;
+}
+.admin-plus::after { transform: rotate(90deg); }
+.admin-external::after {
+  content: ""; display: inline-block; width: 6px; height: 6px; margin-left: 7px;
+  border-top: 1px solid currentColor; border-right: 1px solid currentColor; transform: rotate(-45deg);
+}
 .form-message { min-height: 20px; font-size: 12px; margin: 14px 0 0; color: var(--muted); }
 .form-message.error { color: #a8392f; }
 .connection-status { margin: 8px 0 0; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .12em; }
@@ -100,7 +123,12 @@ dialog::backdrop { background: rgba(20,20,17,.72); }
 #project-form { padding: 35px; overflow-y: auto; max-height: 92vh; }
 .dialog-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
 .dialog-header h2 { margin: 0; font-family: var(--serif); font-size: 47px; font-weight: 400; }
-#close-dialog { border: 0; background: none; cursor: pointer; font-size: 34px; font-weight: 300; }
+#close-dialog { border: 0; background: none; cursor: pointer; width: 35px; height: 35px; position: relative; }
+#close-dialog span::before, #close-dialog span::after,
+.gallery-item button span::before, .gallery-item button span::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 18px; height: 1px; background: currentColor; transform: translate(-50%, -50%) rotate(45deg);
+}
+#close-dialog span::after, .gallery-item button span::after { transform: translate(-50%, -50%) rotate(-45deg); }
 .dialog-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; }
 .danger-button { border: 0; background: none; color: #a8392f; cursor: pointer; text-transform: uppercase; letter-spacing: .14em; font-size: 9px; }
 .gallery-preview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
