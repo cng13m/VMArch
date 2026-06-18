@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Portfolio Admin — Vesa Murtezi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <section id="login-view" class="login-view">
+    <div class="login-brand"><span>V</span><i></i><span>M</span></div>
+    <form id="login-form" class="login-card">
+      <p class="kicker">Private studio</p>
+      <h1>Welcome <em>back.</em></h1>
+      <label>Email<input type="email" id="login-email" required autocomplete="email"></label>
+      <label>Password<input type="password" id="login-password" required autocomplete="current-password"></label>
+      <button type="submit">Sign in <span>↗</span></button>
+      <p id="login-error" class="form-message error"></p>
+    </form>
+  </section>
+
+  <div id="dashboard" class="dashboard" hidden>
+    <aside class="sidebar">
+      <a class="admin-logo" href="../index.html"><span>V</span><i></i><span>M</span></a>
+      <nav>
+        <button class="nav-item active" data-view="overview">Overview</button>
+        <button class="nav-item" data-view="content">Site content</button>
+        <button class="nav-item" data-view="projects">Projects</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="../index.html" target="_blank">View website ↗</a>
+        <button id="logout-button">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <button id="mobile-nav-toggle" aria-label="Open navigation">Menu</button>
+        <div><p>Portfolio manager</p><strong id="admin-email"></strong></div>
+      </header>
+
+      <section id="view-overview" class="admin-view active">
+        <div class="view-heading">
+          <div><p class="kicker">Dashboard</p><h2>Good to see you.</h2></div>
+          <button class="primary-button" data-open-project>New project <span>＋</span></button>
+        </div>
+        <div class="stats-grid">
+          <article><span>Total projects</span><strong id="total-projects">0</strong></article>
+          <article><span>Published</span><strong id="published-projects">0</strong></article>
+          <article><span>Drafts</span><strong id="draft-projects">0</strong></article>
+          <article><span>Featured</span><strong id="featured-projects-count">0</strong></article>
+        </div>
+        <div class="panel">
+          <div class="panel-heading"><h3>Recent projects</h3><button data-go-projects>Manage all ↗</button></div>
+          <div id="recent-projects" class="project-list"></div>
+        </div>
+      </section>
+
+      <section id="view-content" class="admin-view">
+        <div class="view-heading">
+          <div><p class="kicker">Website copy</p><h2>Edit site content.</h2></div>
+          <button class="primary-button" id="save-content">Save changes <span>↗</span></button>
+        </div>
+        <form id="content-form" class="content-sections">
+          <details open>
+            <summary>Hero section <span>01</span></summary>
+            <div class="form-grid">
+              <label>Eyebrow<input name="hero.eyebrow" placeholder="Architecture · Prishtina"></label>
+              <label>Featured project name<input name="hero.project_name"></label>
+              <label class="full">Heading <small>HTML allowed for line breaks and italics</small><textarea name="hero.title" rows="3"></textarea></label>
+              <label class="full">Introduction<textarea name="hero.intro" rows="3"></textarea></label>
+              <label>Year<input name="hero.year"></label>
+              <label>Hero image URL<input name="hero.image_url"></label>
+              <label class="full upload-label">Or upload hero image<input type="file" data-content-upload="hero.image_url" accept="image/*"></label>
+            </div>
+          </details>
+          <details>
+            <summary>Projects introduction <span>02</span></summary>
+            <div class="form-grid">
+              <label>Heading<input name="projects.heading"></label>
+              <label class="full">Introduction<textarea name="projects.intro" rows="3"></textarea></label>
+            </div>
+          </details>
+          <details>
+            <summary>Studio section <span>03</span></summary>
+            <div class="form-grid">
+              <label class="full">Heading <small>HTML allowed</small><textarea name="studio.heading" rows="3"></textarea></label>
+              <label class="full">Description<textarea name="studio.description" rows="4"></textarea></label>
+              <label>Years of practice<input name="studio.years"></label>
+              <label>Projects completed<input name="studio.projects"></label>
+              <label>Design awards<input name="studio.awards"></label>
+            </div>
+          </details>
+          <details>
+            <summary>Approach section <span>04</span></summary>
+            <div class="form-grid">
+              <label class="full">Quote<textarea name="approach.quote" rows="3"></textarea></label>
+              <label class="full">Background image URL<input name="approach.image_url"></label>
+              <label class="full upload-label">Or upload background<input type="file" data-content-upload="approach.image_url" accept="image/*"></label>
+            </div>
+          </details>
+          <details>
+            <summary>Contact section <span>05</span></summary>
+            <div class="form-grid">
+              <label class="full">Heading <small>HTML allowed</small><textarea name="contact.heading" rows="3"></textarea></label>
+              <label class="full">Address <small>HTML allowed</small><textarea name="contact.address" rows="3"></textarea></label>
+              <label>Phone<input name="contact.phone"></label>
+              <label>Email<input type="email" name="contact.email"></label>
+            </div>
+          </details>
+        </form>
+      </section>
+
+      <section id="view-projects" class="admin-view">
+        <div class="view-heading">
+          <div><p class="kicker">Portfolio</p><h2>All projects.</h2></div>
+          <button class="primary-button" data-open-project>New project <span>＋</span></button>
+        </div>
+        <div class="panel">
+          <div id="projects-list" class="project-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="project-dialog">
+    <form id="project-form" method="dialog">
+      <div class="dialog-header">
+        <div><p class="kicker">Portfolio project</p><h2 id="dialog-title">New project</h2></div>
+        <button type="button" id="close-dialog" aria-label="Close">×</button>
+      </div>
+      <input type="hidden" name="id">
+      <div class="form-grid">
+        <label>Project title<input name="title" required></label>
+        <label>URL slug<input name="slug" required placeholder="house-among-trees"></label>
+        <label>Category<input name="category" placeholder="Residential"></label>
+        <label>Location<input name="location" placeholder="Prishtina"></label>
+        <label>Year<input type="number" name="project_year" min="1900" max="2100"></label>
+        <label>Display order<input type="number" name="display_order" value="0"></label>
+        <label class="full">Description<textarea name="description" rows="5"></textarea></label>
+        <label class="full">Cover image URL<input name="cover_image"></label>
+        <label class="full upload-label">Upload cover image<input type="file" id="cover-upload" accept="image/*"></label>
+        <label class="check-label"><input type="checkbox" name="featured"> Featured on homepage</label>
+        <label class="check-label"><input type="checkbox" name="published"> Published</label>
+        <label class="full upload-label">Add gallery images<input type="file" id="gallery-upload" accept="image/*" multiple></label>
+      </div>
+      <div id="gallery-preview" class="gallery-preview"></div>
+      <div class="dialog-actions">
+        <button type="button" class="danger-button" id="delete-project" hidden>Delete project</button>
+        <button type="submit" class="primary-button">Save project <span>↗</span></button>
+      </div>
+      <p id="project-message" class="form-message"></p>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

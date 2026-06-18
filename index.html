@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-page="home">
   <header class="site-header">
     <a class="logo" href="#top" aria-label="Vesa Murtezi home">
       <span>V</span><i></i><span>M</span>
@@ -29,14 +29,14 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy reveal">
-        <p class="eyebrow">Architecture · Prishtina</p>
+        <p class="eyebrow" id="hero-eyebrow">Architecture · Prishtina</p>
         <h1 id="hero-title">Spaces for<br>quiet <em>living.</em></h1>
-        <p class="hero-intro">We shape enduring places through light, proportion, and an honest expression of material.</p>
+        <p class="hero-intro" id="hero-intro">We shape enduring places through light, proportion, and an honest expression of material.</p>
         <a class="text-link" href="#projects"><span>Explore selected work</span><b>↘</b></a>
       </div>
       <figure class="hero-media reveal">
-        <img src="assets/hero-residence.png" alt="Minimalist concrete residence with timber entrance">
-        <figcaption><span>01 / 04</span><span>House on the Plain</span><span>2026</span></figcaption>
+        <img id="hero-image" src="assets/hero-residence.png" alt="Minimalist concrete residence with timber entrance">
+        <figcaption><span>01 / 04</span><span id="hero-project-name">House on the Plain</span><span id="hero-year">2026</span></figcaption>
       </figure>
       <div class="scroll-cue" aria-hidden="true"><span>Scroll to discover</span><i></i></div>
     </section>
@@ -45,15 +45,15 @@
       <div class="section-heading reveal">
         <div>
           <p class="eyebrow">Selected projects</p>
-          <h2>Built with intention.</h2>
+          <h2 id="projects-heading">Built with intention.</h2>
         </div>
         <div class="section-heading-side">
-          <p>Residential and cultural spaces grounded in their landscape, designed to grow more beautiful with time.</p>
+          <p id="projects-intro">Residential and cultural spaces grounded in their landscape, designed to grow more beautiful with time.</p>
           <a class="text-link" href="projects.html"><span>All projects</span><b>↗</b></a>
         </div>
       </div>
 
-      <div class="project-grid">
+      <div class="project-grid" id="featured-projects">
         <article class="project-card project-card--wide reveal">
           <a href="#project-forest" class="project-image">
             <img src="assets/forest-house.png" alt="Contemporary house surrounded by woodland">
@@ -100,38 +100,38 @@
       <div class="studio-number reveal">12</div>
       <div class="studio-copy reveal">
         <p class="eyebrow">The studio</p>
-        <h2>Architecture as a careful conversation between <em>people</em> and <em>place.</em></h2>
+        <h2 id="studio-heading">Architecture as a careful conversation between <em>people</em> and <em>place.</em></h2>
       </div>
       <div class="studio-detail reveal">
-        <p>Vesa Murtezi is an architecture and interiors studio working across Kosovo and the wider region. Our practice is rooted in observation: how daylight moves, how materials age, and how everyday rituals give a space meaning.</p>
+        <p id="studio-description">Vesa Murtezi is an architecture and interiors studio working across Kosovo and the wider region. Our practice is rooted in observation: how daylight moves, how materials age, and how everyday rituals give a space meaning.</p>
         <div class="studio-stats">
-          <div><strong>12</strong><span>Years of practice</span></div>
-          <div><strong>38</strong><span>Projects completed</span></div>
-          <div><strong>07</strong><span>Design awards</span></div>
+          <div><strong id="stat-years">12</strong><span>Years of practice</span></div>
+          <div><strong id="stat-projects">38</strong><span>Projects completed</span></div>
+          <div><strong id="stat-awards">07</strong><span>Design awards</span></div>
         </div>
         <a class="text-link" href="#approach"><span>Meet the studio</span><b>↘</b></a>
       </div>
     </section>
 
     <section id="approach" class="manifesto">
-      <img src="assets/courtyard-house.png" alt="" aria-hidden="true">
+      <img id="approach-image" src="assets/courtyard-house.png" alt="" aria-hidden="true">
       <div class="manifesto-overlay"></div>
       <div class="manifesto-copy reveal">
         <p class="eyebrow">Our approach</p>
-        <blockquote>“Good architecture does not ask for attention. It creates the conditions for life to unfold.”</blockquote>
+        <blockquote id="approach-quote">“Good architecture does not ask for attention. It creates the conditions for life to unfold.”</blockquote>
       </div>
     </section>
 
     <section id="contact" class="contact section-pad">
       <p class="eyebrow reveal">Start a conversation</p>
       <div class="contact-main reveal">
-        <h2>Have a place<br>in <em>mind?</em></h2>
-        <a href="mailto:studio@vesamurtezi.com" aria-label="Email Vesa Murtezi Architecture">↗</a>
+        <h2 id="contact-heading">Have a place<br>in <em>mind?</em></h2>
+        <a id="contact-email-link" href="mailto:studio@vesamurtezi.com" aria-label="Email Vesa Murtezi Architecture">↗</a>
       </div>
       <div class="contact-footer">
         <div>
-          <p>Rr. Garibaldi 12<br>10000 Prishtina, Kosovo</p>
-          <p>+383 44 123 456<br>studio@vesamurtezi.com</p>
+          <p id="contact-address">Rr. Garibaldi 12<br>10000 Prishtina, Kosovo</p>
+          <p><span id="contact-phone">+383 44 123 456</span><br><span id="contact-email">studio@vesamurtezi.com</span></p>
         </div>
         <div class="socials">
           <a href="#" aria-label="Instagram">Instagram ↗</a>
@@ -142,6 +142,9 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="site-data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
