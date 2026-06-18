@@ -47,6 +47,11 @@ alter table public.site_content enable row level security;
 alter table public.projects enable row level security;
 alter table public.project_images enable row level security;
 
+drop policy if exists "Admins can verify their own access" on public.admin_users;
+create policy "Admins can verify their own access"
+on public.admin_users for select to authenticated
+using (user_id = auth.uid());
+
 drop policy if exists "Public can read site content" on public.site_content;
 create policy "Public can read site content" on public.site_content for select to anon, authenticated using (true);
 drop policy if exists "Admins manage site content" on public.site_content;
@@ -80,3 +85,13 @@ using (bucket_id = 'portfolio' and public.is_admin());
 insert into public.admin_users (user_id)
 values ('3ff5719b-ff86-48f8-82d9-93225f539cc3')
 on conflict (user_id) do nothing;
+
+-- Optional verification after running this setup:
+-- select
+--   users.id,
+--   users.email,
+--   users.email_confirmed_at,
+--   (admins.user_id is not null) as is_portfolio_admin
+-- from auth.users as users
+-- left join public.admin_users as admins on admins.user_id = users.id
+-- where users.id = '3ff5719b-ff86-48f8-82d9-93225f539cc3';

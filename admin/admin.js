@@ -54,15 +54,30 @@ function setBusy(button, busy, label = "Saving…") {
   }
 }
 
-async function isAuthorized() {
-  const { data: { session } } = await client.auth.getSession();
-  if (!session) return false;
+async function getAuthorization() {
+  const { data: { session }, error: sessionError } = await client.auth.getSession();
+  if (sessionError) return { authorized: false, error: sessionError.message };
+  if (!session?.user) return { authorized: false, error: "No active session." };
+
+  const configuredAdmins = window.VM_SUPABASE.adminUserIds || [];
+  if (configuredAdmins.includes(session.user.id)) {
+    return { authorized: true, user: session.user };
+  }
+
   const { data, error } = await client.rpc("is_admin");
-  return !error && data === true;
+  if (error) return { authorized: false, error: `Admin verification failed: ${error.message}` };
+  return {
+    authorized: data === true,
+    user: session.user,
+    error: data === true ? null : "This account is not registered as a portfolio administrator."
+  };
 }
 
-async function showDashboard() {
-  const { data: { user } } = await client.auth.getUser();
+async function showDashboard(user) {
+  if (!user) {
+    const { data } = await client.auth.getUser();
+    user = data.user;
+  }
   loginView.hidden = true;
   dashboard.hidden = false;
   document.getElementById("admin-email").textContent = user?.email || "";
@@ -70,8 +85,9 @@ async function showDashboard() {
 }
 
 async function checkSession() {
-  if (await isAuthorized()) {
-    showDashboard();
+  const authorization = await getAuthorization();
+  if (authorization.authorized) {
+    showDashboard(authorization.user);
   } else {
     await client.auth.signOut();
     loginView.hidden = false;
@@ -84,18 +100,28 @@ loginForm.addEventListener("submit", async (event) => {
   const errorElement = document.getElementById("login-error");
   errorElement.textContent = "";
   setBusy(button, true, "Signing in…");
-  const { error } = await client.auth.signInWithPassword({
+  const { data, error } = await client.auth.signInWithPassword({
     email: document.getElementById("login-email").value,
     password: document.getElementById("login-password").value
   });
-  if (error || !(await isAuthorized())) {
+
+  if (error) {
+    errorElement.textContent = error.message === "Email not confirmed"
+      ? "Your Supabase email is not confirmed. Confirm it in Authentication → Users, then try again."
+      : error.message;
+    setBusy(button, false);
+    return;
+  }
+
+  const authorization = await getAuthorization();
+  if (!authorization.authorized) {
     await client.auth.signOut();
-    errorElement.textContent = error?.message || "This account is not authorized as an administrator.";
+    errorElement.textContent = authorization.error || "This account is not authorized as an administrator.";
     setBusy(button, false);
     return;
   }
   setBusy(button, false);
-  showDashboard();
+  showDashboard(data.user);
 });
 
 document.getElementById("logout-button").addEventListener("click", async () => {
