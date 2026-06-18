@@ -49,6 +49,7 @@
     if (document.body.dataset.page === "home") {
       const hero = sections.hero || {};
       const studio = sections.studio || {};
+      const about = sections.about || {};
       const projectsCopy = sections.projects || {};
       const approach = sections.approach || {};
       const contact = sections.contact || {};
@@ -62,6 +63,18 @@
 
       setText("projects-heading", projectsCopy.heading);
       setText("projects-intro", projectsCopy.intro);
+      setText("about-eyebrow", about.eyebrow);
+      setHTML("about-heading", about.heading);
+      setText("about-bio", about.bio);
+      setText("about-meta", about.meta);
+      if (about.image_url) document.getElementById("about-image").src = about.image_url;
+      if (about.cv_url) {
+        const cvLink = document.getElementById("cv-download");
+        cvLink.href = about.cv_url;
+        cvLink.removeAttribute("hidden");
+      } else {
+        document.getElementById("cv-download")?.setAttribute("hidden", "");
+      }
       setHTML("studio-heading", studio.heading);
       setText("studio-description", studio.description);
       setText("stat-years", studio.years);

@@ -32,6 +32,14 @@ const defaults = {
     heading: "Built with intention.",
     intro: "Residential and cultural spaces grounded in their landscape, designed to grow more beautiful with time."
   },
+  about: {
+    eyebrow: "About the architect",
+    heading: "Designing with care,<br><em>clarity, and purpose.</em>",
+    bio: "Vesa Murtezi is an architect based in Prishtina, working across architecture and interiors. Her practice is shaped by a careful reading of place, material, and the everyday lives of the people who inhabit each project.",
+    meta: "Architect · Prishtina, Kosovo",
+    image_url: "",
+    cv_url: ""
+  },
   studio: {
     heading: "Architecture as a careful conversation between <em>people</em> and <em>place.</em>",
     description: "Vesa Murtezi is an architecture and interiors studio working across Kosovo and the wider region.",
@@ -214,6 +222,23 @@ document.querySelectorAll("[data-content-upload]").forEach((input) => {
       toast("Image uploaded — save changes to publish");
     } catch (error) {
       toast(`Upload failed: ${error.message}`);
+    } finally {
+      input.disabled = false;
+      input.value = "";
+    }
+  });
+});
+
+document.querySelectorAll("[data-document-upload]").forEach((input) => {
+  input.addEventListener("change", async () => {
+    if (!input.files[0]) return;
+    try {
+      input.disabled = true;
+      const url = await uploadImage(input.files[0], "documents");
+      contentForm.elements[input.dataset.documentUpload].value = url;
+      toast("CV uploaded — save changes to publish");
+    } catch (error) {
+      toast(`CV upload failed: ${error.message}`);
     } finally {
       input.disabled = false;
       input.value = "";

@@ -69,8 +69,11 @@ drop policy if exists "Admins manage project images" on public.project_images;
 create policy "Admins manage project images" on public.project_images for all to authenticated using (public.is_admin()) with check (public.is_admin());
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('portfolio', 'portfolio', true, 10485760, array['image/jpeg','image/png','image/webp','image/avif'])
-on conflict (id) do update set public = true;
+values ('portfolio', 'portfolio', true, 10485760, array['image/jpeg','image/png','image/webp','image/avif','application/pdf'])
+on conflict (id) do update set
+  public = true,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 drop policy if exists "Admins upload portfolio images" on storage.objects;
 create policy "Admins upload portfolio images" on storage.objects for insert to authenticated
