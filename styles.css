@@ -24,8 +24,8 @@ img { display: block; width: 100%; }
 
 .line-icon {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   position: relative;
   flex: 0 0 auto;
   font-style: normal;
@@ -33,41 +33,62 @@ img { display: block; width: 100%; }
 .line-icon::before {
   content: "";
   position: absolute;
+  width: 15px;
+  height: 1px;
+  left: 1px;
+  bottom: 2px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  transform-origin: left center;
+}
+.line-icon::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  right: 1px;
+  top: 1px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+}
+.line-icon--down { transform: rotate(90deg); }
+.line-icon--large { width: 30px; height: 30px; }
+.line-icon--large::before { width: 32px; left: 2px; bottom: 4px; }
+.line-icon--large::after { width: 13px; height: 13px; right: 2px; top: 2px; }
+.external-link {
+  position: relative;
+  padding-right: 18px;
+}
+.external-link::before {
+  content: "";
+  position: absolute;
   width: 10px;
   height: 1px;
-  right: 1px;
-  top: 5px;
+  right: 0;
+  top: calc(50% + 3px);
   background: currentColor;
   transform: rotate(-45deg);
   transform-origin: right center;
 }
-.line-icon::after {
+.external-link::after {
   content: "";
   position: absolute;
   width: 5px;
   height: 5px;
   right: 0;
-  top: 0;
+  top: calc(50% - 5px);
   border-top: 1px solid currentColor;
   border-right: 1px solid currentColor;
 }
-.line-icon--down { transform: rotate(90deg); }
-.line-icon--large { width: 25px; height: 25px; }
-.line-icon--large::before { width: 22px; top: 11px; }
-.line-icon--large::after { width: 11px; height: 11px; }
-.external-link::after, .back-link::before {
+.back-link::before {
   content: "";
   display: inline-block;
   width: 7px;
   height: 7px;
-  margin-left: 7px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  transform: rotate(-45deg);
-}
-.back-link::before {
   margin: 0 9px 0 0;
-  transform: rotate(-135deg);
+  border-left: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
 }
 
 .site-header {
@@ -122,7 +143,8 @@ em { font-weight: 400; }
   font-weight: 500;
 }
 .text-link b { transition: transform .3s ease; }
-.text-link:hover b { transform: translate(4px, 4px); }
+.text-link:hover b { transform: translate(3px, -3px); }
+.text-link:hover .line-icon--down { transform: rotate(90deg) translate(3px, -3px); }
 .hero-media { margin: 0; position: relative; overflow: hidden; min-height: 600px; }
 .hero-media img { width: 100%; height: calc(100% - 46px); object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
 .hero-media:hover img { transform: scale(1.015); }
@@ -194,8 +216,10 @@ em { font-weight: 400; }
 .contact { background: #20201c; color: #f4f2ed; padding-bottom: 45px; }
 .contact-main { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 110px; }
 .contact-main h2 { font-size: clamp(72px, 10.5vw, 170px); line-height: .77; letter-spacing: -.045em; }
-.contact-main > a { width: clamp(82px, 9vw, 140px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; display: grid; place-items: center; font-size: 34px; transition: .35s; }
-.contact-main > a:hover { background: var(--paper); color: var(--ink); transform: rotate(45deg); }
+.contact-main > a { width: clamp(82px, 9vw, 140px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; display: grid; place-items: center; transition: background .35s, color .35s, border-color .35s; }
+.contact-main > a .line-icon { transition: transform .35s; }
+.contact-main > a:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.contact-main > a:hover .line-icon { transform: translate(4px, -4px); }
 .contact-footer { border-top: 1px solid rgba(255,255,255,.22); padding-top: 28px; display: grid; grid-template-columns: 2fr 1fr auto; align-items: end; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; line-height: 1.8; }
 .contact-footer > div:first-child { display: flex; gap: 7vw; }
 .contact-footer p { margin: 0; }
@@ -221,8 +245,10 @@ em { font-weight: 400; }
 .archive-contact { padding: 120px 8.5vw 35px; background: #20201c; color: var(--paper); }
 .archive-contact-row { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 110px; }
 .archive-contact-row h2 { font-size: clamp(65px, 9vw, 145px); line-height: .82; letter-spacing: -.04em; }
-.archive-contact-row > a { width: clamp(78px, 8vw, 125px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; display: grid; place-items: center; font-size: 30px; transition: .35s; }
-.archive-contact-row > a:hover { background: var(--paper); color: var(--ink); transform: rotate(45deg); }
+.archive-contact-row > a { width: clamp(78px, 8vw, 125px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; display: grid; place-items: center; transition: background .35s, color .35s, border-color .35s; }
+.archive-contact-row > a .line-icon { transition: transform .35s; }
+.archive-contact-row > a:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.archive-contact-row > a:hover .line-icon { transform: translate(4px, -4px); }
 .archive-footer { border-top: 1px solid rgba(255,255,255,.2); padding-top: 25px; display: flex; justify-content: space-between; font-size: 9px; text-transform: uppercase; letter-spacing: .16em; }
 .archive-footer p { margin: 0; }
 
@@ -308,6 +334,10 @@ em { font-weight: 400; }
   .contact-main { padding-bottom: 85px; }
   .contact-main { gap: 20px; }
   .contact-main > a { align-self: flex-end; flex: 0 0 68px; }
+  .contact-main > a .line-icon--large,
+  .archive-contact-row > a .line-icon--large { transform: scale(.82); }
+  .contact-main > a:hover .line-icon--large,
+  .archive-contact-row > a:hover .line-icon--large { transform: scale(.82); }
   .contact-footer { grid-template-columns: 1fr; }
   .contact-footer > div:first-child { display: grid; gap: 20px; }
   .socials { margin-top: 10px; }
