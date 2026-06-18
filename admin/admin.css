@@ -36,6 +36,9 @@ input:focus, textarea:focus { border-color: var(--ink); background: white; }
 .login-card button span, .primary-button span { font-size: 17px; font-weight: 300; }
 .form-message { min-height: 20px; font-size: 12px; margin: 14px 0 0; color: var(--muted); }
 .form-message.error { color: #a8392f; }
+.connection-status { margin: 8px 0 0; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .12em; }
+.connection-status.ready { color: #326446; }
+.connection-status.failed { color: #a8392f; }
 
 .dashboard { min-height: 100vh; display: grid; grid-template-columns: 235px 1fr; }
 .sidebar { position: fixed; inset: 0 auto 0 0; width: 235px; padding: 35px 28px; background: var(--dark); color: white; display: flex; flex-direction: column; z-index: 20; }

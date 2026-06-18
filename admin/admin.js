@@ -5,8 +5,21 @@ const loginForm = document.getElementById("login-form");
 const projectDialog = document.getElementById("project-dialog");
 const projectForm = document.getElementById("project-form");
 const contentForm = document.getElementById("content-form");
+const connectionStatus = document.getElementById("connection-status");
 let projects = [];
 let editingGallery = [];
+
+if (!client) {
+  connectionStatus.textContent = "Could not load the secure login service";
+  connectionStatus.classList.add("failed");
+  document.getElementById("login-error").textContent =
+    "Supabase did not load. Disable content blockers for this site or refresh the page.";
+  loginForm.querySelector("button").disabled = true;
+  throw new Error("Supabase client failed to initialize.");
+}
+
+connectionStatus.textContent = "Secure connection ready";
+connectionStatus.classList.add("ready");
 
 const defaults = {
   hero: {
@@ -100,10 +113,20 @@ loginForm.addEventListener("submit", async (event) => {
   const errorElement = document.getElementById("login-error");
   errorElement.textContent = "";
   setBusy(button, true, "Signing in…");
-  const { data, error } = await client.auth.signInWithPassword({
-    email: document.getElementById("login-email").value,
-    password: document.getElementById("login-password").value
-  });
+  let data;
+  let error;
+  try {
+    const result = await client.auth.signInWithPassword({
+      email: document.getElementById("login-email").value.trim(),
+      password: document.getElementById("login-password").value
+    });
+    data = result.data;
+    error = result.error;
+  } catch (requestError) {
+    errorElement.textContent = `Could not reach Supabase: ${requestError.message}`;
+    setBusy(button, false);
+    return;
+  }
 
   if (error) {
     errorElement.textContent = error.message === "Email not confirmed"

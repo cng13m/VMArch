@@ -4,7 +4,11 @@ window.VM_SUPABASE = {
   adminUserIds: ["3ff5719b-ff86-48f8-82d9-93225f539cc3"]
 };
 
-window.vmSupabase = window.supabase.createClient(
-  window.VM_SUPABASE.url,
-  window.VM_SUPABASE.publishableKey
-);
+if (window.supabase?.createClient) {
+  window.vmSupabase = window.supabase.createClient(
+    window.VM_SUPABASE.url,
+    window.VM_SUPABASE.publishableKey
+  );
+} else {
+  window.vmSupabase = null;
+}
