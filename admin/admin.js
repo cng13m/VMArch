@@ -8,6 +8,7 @@ const contentForm = document.getElementById("content-form");
 const connectionStatus = document.getElementById("connection-status");
 let projects = [];
 let editingGallery = [];
+let editingProjectId = null;
 
 if (!client) {
   connectionStatus.textContent = "Could not load the secure login service";
@@ -302,11 +303,14 @@ function renderGallery() {
 
 function openProject(project = null) {
   projectForm.reset();
+  editingProjectId = project?.id || null;
+  projectForm.elements.id.value = editingProjectId || "";
+  document.getElementById("project-message").textContent = "";
   editingGallery = project?.project_images?.sort((a, b) => a.display_order - b.display_order) || [];
   document.getElementById("dialog-title").textContent = project ? "Edit project" : "New project";
   document.getElementById("delete-project").hidden = !project;
   if (project) {
-    ["id", "title", "slug", "category", "location", "project_year", "display_order", "description", "cover_image"].forEach((field) => {
+    ["title", "slug", "category", "location", "project_year", "display_order", "description", "cover_image"].forEach((field) => {
       projectForm.elements[field].value = project[field] ?? "";
     });
     projectForm.elements.featured.checked = project.featured;
@@ -317,7 +321,10 @@ function openProject(project = null) {
 }
 
 document.querySelectorAll("[data-open-project]").forEach((button) => button.addEventListener("click", () => openProject()));
-document.getElementById("close-dialog").addEventListener("click", () => projectDialog.close());
+document.getElementById("close-dialog").addEventListener("click", () => {
+  editingProjectId = null;
+  projectDialog.close();
+});
 
 projectForm.elements.title.addEventListener("input", () => {
   if (!projectForm.elements.id.value) {
@@ -344,7 +351,10 @@ document.getElementById("cover-upload").addEventListener("change", async (event)
 projectForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const submit = projectForm.querySelector('[type="submit"]');
-  const id = projectForm.elements.id.value;
+  // Only a project explicitly opened from the list may be updated. Keeping this
+  // state separate from the form prevents a stale hidden ID from turning a new
+  // project submission into an update of the previously opened project.
+  const id = editingProjectId;
   setBusy(submit, true);
   const project = {
     title: projectForm.elements.title.value.trim(),
@@ -390,16 +400,18 @@ projectForm.addEventListener("submit", async (event) => {
   }
 
   setBusy(submit, false);
+  editingProjectId = null;
   projectDialog.close();
   toast("Project saved");
   await loadProjects();
 });
 
 document.getElementById("delete-project").addEventListener("click", async () => {
-  const id = projectForm.elements.id.value;
+  const id = editingProjectId;
   if (!id || !confirm("Delete this project and its gallery? This cannot be undone.")) return;
   const { error } = await client.from("projects").delete().eq("id", id);
   if (error) return toast(`Delete failed: ${error.message}`);
+  editingProjectId = null;
   projectDialog.close();
   toast("Project deleted");
   await loadProjects();
