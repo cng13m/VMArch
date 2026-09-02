@@ -202,17 +202,19 @@ document.getElementById("save-content").addEventListener("click", async () => {
   toast("Website content saved");
 });
 
-async function uploadImage(file, folder) {
+async function uploadFile(file, folder, contentType = file.type) {
   const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
   const path = `${folder}/${crypto.randomUUID()}.${extension}`;
   const { error } = await client.storage.from("portfolio").upload(path, file, {
     cacheControl: "3600",
-    contentType: file.type,
+    contentType,
     upsert: false
   });
   if (error) throw error;
   return client.storage.from("portfolio").getPublicUrl(path).data.publicUrl;
 }
+
+const uploadImage = (file, folder) => uploadFile(file, folder);
 
 document.querySelectorAll("[data-content-upload]").forEach((input) => {
   input.addEventListener("change", async () => {
@@ -234,14 +236,24 @@ document.querySelectorAll("[data-content-upload]").forEach((input) => {
 document.querySelectorAll("[data-document-upload]").forEach((input) => {
   input.addEventListener("change", async () => {
     if (!input.files[0]) return;
+    const file = input.files[0];
+    const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+    if (!isPdf) {
+      toast("Please select a PDF file for the CV");
+      input.value = "";
+      return;
+    }
     try {
       input.disabled = true;
-      const url = await uploadImage(input.files[0], "documents");
+      const url = await uploadFile(file, "documents", "application/pdf");
       contentForm.elements[input.dataset.documentUpload].value = url;
-      contentForm.elements.about.cv_name.value = input.files[0].name;
+      contentForm.elements.about.cv_name.value = file.name;
       toast("CV uploaded — save changes to publish");
     } catch (error) {
-      toast(`CV upload failed: ${error.message}`);
+      const message = /mime type.+not supported/i.test(error.message)
+        ? "CV upload failed: allow application/pdf in the Supabase portfolio bucket, then try again."
+        : `CV upload failed: ${error.message}`;
+      toast(message);
     } finally {
       input.disabled = false;
       input.value = "";
