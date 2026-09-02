@@ -24,10 +24,7 @@ connectionStatus.classList.add("ready");
 
 const defaults = {
   hero: {
-    eyebrow: "Architecture · Prishtina",
-    title: "Spaces for<br>quiet <em>living.</em>",
-    intro: "We shape enduring places through light, proportion, and an honest expression of material.",
-    project_name: "House on the Plain", year: "2026", image_url: ""
+    image_url: ""
   },
   projects: {
     heading: "Built with intention.",

@@ -83,23 +83,13 @@ img { display: block; width: 100%; }
 
 .hero {
   min-height: calc(100vh - 102px);
-  display: grid;
-  grid-template-columns: 36% 64%;
-  grid-template-rows: 1fr auto;
   background: var(--paper-light);
-}
-.hero-copy {
-  padding: 9vh 5vw 4vh 9vw;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
+  position: relative;
 }
 .eyebrow { margin: 0 0 28px; font-size: 10px; text-transform: uppercase; letter-spacing: .26em; font-weight: 500; }
 h1, h2, h3, blockquote { font-family: var(--serif); font-weight: 400; margin: 0; }
 h1 { font-size: clamp(58px, 6.1vw, 106px); line-height: .88; letter-spacing: -.035em; }
 em { font-weight: 400; }
-.hero-intro { max-width: 355px; margin: 45px 0 34px; font-size: 13px; line-height: 1.8; color: var(--muted); }
 .text-link {
   width: fit-content;
   min-width: 205px;
@@ -116,14 +106,12 @@ em { font-weight: 400; }
 .text-link b { transition: transform .3s ease; }
 .text-link:hover b { transform: translate(3px, -3px); }
 .text-link:hover .line-icon--down { transform: rotate(90deg) translate(3px, -3px); }
-.hero-media { margin: 0; position: relative; overflow: hidden; min-height: 600px; }
-.hero-media img { width: 100%; height: calc(100% - 46px); object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.hero-media { height: calc(100vh - 102px); margin: 0; position: relative; overflow: hidden; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
 .hero-media:hover img { transform: scale(1.015); }
-.hero-media figcaption { height: 46px; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; font-size: 9px; text-transform: uppercase; letter-spacing: .15em; }
-.hero-media figcaption span:nth-child(2) { text-align: center; }
-.hero-media figcaption span:last-child { text-align: right; padding-right: 4vw; }
-.scroll-cue { grid-column: 1; display: flex; align-items: center; gap: 12px; padding: 0 0 30px 4.2vw; font-size: 8px; text-transform: uppercase; letter-spacing: .2em; }
-.scroll-cue i { width: 46px; height: 1px; background: var(--ink); }
+.hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0, 0, 0, .3), transparent 38%); }
+.hero-title { position: absolute; z-index: 1; top: 50%; left: 50%; width: min(900px, 84vw); margin: 0; color: #fff; font-family: var(--sans); font-size: clamp(54px, 6vw, 96px); font-weight: 300; line-height: 1.05; letter-spacing: .08em; text-align: center; text-shadow: 0 2px 20px rgba(0, 0, 0, .2); transform: translate(-50%, -50%); }
+.hero-title span { display: block; margin-top: 23px; font-size: .18em; font-weight: 400; letter-spacing: .28em; text-transform: uppercase; }
 
 .section-pad { padding: 120px 8.5vw; }
 .projects { background: var(--paper); }
@@ -250,10 +238,7 @@ em { font-weight: 400; }
   .site-nav { position: fixed; inset: 82px 0 auto; height: 0; overflow: hidden; background: var(--paper-light); flex-direction: column; align-items: center; justify-content: center; gap: 30px; transition: height .45s ease; }
   .site-nav.is-open { height: calc(100vh - 82px); }
   .site-nav a { font-family: var(--serif); font-size: 42px; text-transform: none; letter-spacing: 0; }
-  .hero { min-height: auto; grid-template-columns: 1fr; grid-template-rows: auto; }
-  .hero-copy { padding: 85px 8vw 70px; min-height: 570px; }
-  .hero-media { min-height: 62vw; }
-  .scroll-cue { display: none; }
+  .hero, .hero-media { min-height: 0; height: calc(100vh - 82px); }
   .section-pad { padding: 90px 7vw; }
   .section-heading { align-items: flex-start; }
   .section-heading-side { width: 38vw; margin-right: 0; }
@@ -275,12 +260,8 @@ em { font-weight: 400; }
   .site-header { padding: 0 6vw; }
   .logo { font-size: 18px; }
   .menu-toggle { right: 6vw; }
-  .hero-copy { min-height: 520px; }
-  .hero-intro { margin-top: 34px; }
-  .hero-media { min-height: 74vw; }
-  .hero-media figcaption { grid-template-columns: 1fr 2fr; padding: 0 5vw; }
-  .hero-media figcaption span:last-child { display: none; }
-  .hero-media figcaption span:nth-child(2) { text-align: right; }
+  .hero-title { width: 88vw; font-size: clamp(48px, 13vw, 72px); letter-spacing: .05em; }
+  .hero-title span { margin-top: 17px; font-size: .2em; letter-spacing: .2em; }
   .section-heading { display: block; margin-bottom: 45px; }
   .section-heading-side { width: auto; margin: 24px 0 0; }
   .section-heading-side .text-link { display: none; }

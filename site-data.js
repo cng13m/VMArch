@@ -80,11 +80,6 @@
       const approach = sections.approach || {};
       const contact = sections.contact || {};
 
-      setText("hero-eyebrow", hero.eyebrow);
-      setHTML("hero-title", hero.title);
-      setText("hero-intro", hero.intro);
-      setText("hero-project-name", hero.project_name);
-      setText("hero-year", hero.year);
       if (hero.image_url) document.getElementById("hero-image").src = hero.image_url;
 
       setText("projects-heading", projectsCopy.heading);
