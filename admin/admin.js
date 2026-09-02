@@ -39,12 +39,13 @@ const defaults = {
     bio: "Vesa Murtezi is an architect based in Prishtina, working across architecture and interiors. Her practice is shaped by a careful reading of place, material, and the everyday lives of the people who inhabit each project.",
     meta: "Architect · Prishtina, Kosovo",
     image_url: "",
-    cv_url: ""
+    cv_url: "",
+    cv_name: "Vesa-Murtezi-CV.pdf"
   },
-  studio: {
-    heading: "Architecture as a careful conversation between <em>people</em> and <em>place.</em>",
-    description: "Vesa Murtezi is an architecture and interiors studio working across Kosovo and the wider region.",
-    years: "12", projects: "38", awards: "07"
+  capabilities: {
+    eyebrow: "Capabilities",
+    heading: "Skills & Expertise",
+    skills: "Architectural Design\nInterior Design\n3D Visualization\nSustainable Design\nUrban Planning\nProject Management\nArchiCAD\nAutoCAD\nSketchUp\nRhino\nAdobe Creative Suite"
   },
   approach: {
     quote: "“Good architecture does not ask for attention. It creates the conditions for life to unfold.”",
@@ -237,6 +238,7 @@ document.querySelectorAll("[data-document-upload]").forEach((input) => {
       input.disabled = true;
       const url = await uploadImage(input.files[0], "documents");
       contentForm.elements[input.dataset.documentUpload].value = url;
+      contentForm.elements.about.cv_name.value = input.files[0].name;
       toast("CV uploaded — save changes to publish");
     } catch (error) {
       toast(`CV upload failed: ${error.message}`);

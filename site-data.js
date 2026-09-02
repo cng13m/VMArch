@@ -12,6 +12,32 @@
     if (element && value) element.innerHTML = value;
   };
 
+  const setCapabilities = (value) => {
+    const container = document.getElementById("capabilities-list");
+    if (!container || !value) return;
+    const skills = String(value)
+      .split(/\r?\n/)
+      .map((skill) => skill.trim())
+      .filter(Boolean);
+    if (!skills.length) return;
+    container.replaceChildren(...skills.map((skill) => {
+      const item = document.createElement("div");
+      item.className = "capability-card";
+      item.textContent = skill;
+      return item;
+    }));
+  };
+
+  const getDownloadURL = (url, filename) => {
+    try {
+      const downloadURL = new URL(url, window.location.href);
+      downloadURL.searchParams.set("download", filename || "Vesa-Murtezi-CV.pdf");
+      return downloadURL.href;
+    } catch {
+      return url;
+    }
+  };
+
   const escapeHTML = (value = "") =>
     String(value).replace(/[&<>"']/g, (character) => ({
       "&": "&amp;",
@@ -48,7 +74,7 @@
 
     if (document.body.dataset.page === "home") {
       const hero = sections.hero || {};
-      const studio = sections.studio || {};
+      const capabilities = sections.capabilities || {};
       const about = sections.about || {};
       const projectsCopy = sections.projects || {};
       const approach = sections.approach || {};
@@ -70,16 +96,15 @@
       if (about.image_url) document.getElementById("about-image").src = about.image_url;
       if (about.cv_url) {
         const cvLink = document.getElementById("cv-download");
-        cvLink.href = about.cv_url;
+        cvLink.href = getDownloadURL(about.cv_url, about.cv_name);
+        cvLink.download = about.cv_name || "Vesa-Murtezi-CV.pdf";
         cvLink.removeAttribute("hidden");
       } else {
         document.getElementById("cv-download")?.setAttribute("hidden", "");
       }
-      setHTML("studio-heading", studio.heading);
-      setText("studio-description", studio.description);
-      setText("stat-years", studio.years);
-      setText("stat-projects", studio.projects);
-      setText("stat-awards", studio.awards);
+      setText("capabilities-eyebrow", capabilities.eyebrow);
+      setText("capabilities-heading", capabilities.heading);
+      setCapabilities(capabilities.skills);
       setText("approach-quote", approach.quote);
       if (approach.image_url) document.getElementById("approach-image").src = approach.image_url;
 
