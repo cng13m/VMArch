@@ -244,7 +244,7 @@ document.querySelectorAll("[data-document-upload]").forEach((input) => {
       input.disabled = true;
       const url = await uploadFile(file, "documents", "application/pdf");
       contentForm.elements[input.dataset.documentUpload].value = url;
-      contentForm.elements.about.cv_name.value = file.name;
+      contentForm.elements["about.cv_name"].value = file.name;
       toast("CV uploaded — save changes to publish");
     } catch (error) {
       const message = /mime type.+not supported/i.test(error.message)
